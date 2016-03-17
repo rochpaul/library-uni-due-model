@@ -3,6 +3,7 @@ package unidue.lib.model;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import unidue.rc.settings.JndiSetup;
 
 /**
  * Unit test for simple App.
@@ -18,6 +19,10 @@ public class AppTest
     public AppTest( String testName )
     {
         super( testName );
+        
+        JndiSetup.doSetup("reserve_collections");
+        
+        
     }
 
     /**
