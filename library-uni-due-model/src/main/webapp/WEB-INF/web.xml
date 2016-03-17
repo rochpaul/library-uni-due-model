@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!DOCTYPE web-app
+   PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <display-name>library uni due model webservice</display-name>
+    <servlet>
+        <servlet-name>cayenne-reserve-collections</servlet-name>
+        <servlet-class>org.apache.cayenne.configuration.rop.server.ROPHessianServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cayenne-reserve-collections</servlet-name>
+        <url-pattern>/cayenne-service</url-pattern>
+    </servlet-mapping>
+</web-app>

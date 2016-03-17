@@ -17,10 +17,10 @@
         <simple-jndi-version>0.11.4.1</simple-jndi-version>
         <postgresql-version>9.3-1103-jdbc41</postgresql-version>
         <h2-database-version>1.2.138</h2-database-version>
+        <resin-hessian-version>3.1.6</resin-hessian-version>
     </properties>
 
     <dependencies>
-
 
         <!-- testing scope -->
         <dependency>
@@ -37,12 +37,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Database drivers -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql-version}</version>
-        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -50,11 +44,81 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Database drivers -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql-version}</version>
+        </dependency>
+
+
+        <!-- cayenne -->
         <dependency>
             <groupId>org.apache.cayenne</groupId>
             <artifactId>cayenne-server</artifactId>
             <version>${cayenne-server-version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>resin-hessian</artifactId>
+            <version>3.1.6</version>
+        </dependency>
+
     </dependencies>
+
+    <!-- Run the application using "mvn jetty:run" -->
+
+    <build>
+        <finalName>reserve-collections</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+
+                    <!-- Do NOT change version simply to jetty >= 7 as some 
+                        migration has to be done (http://wiki.eclipse.org/Jetty/Howto/Upgrade_from_Jetty_6_to_Jetty_7) -->
+                    <version>9.3.7.v20160115</version>
+                    <configuration>
+                        <stopKey>exit</stopKey>
+                        <stopPort>32154</stopPort>
+                        <!-- Log to the console. -->
+                        <requestLog
+                            implementation="org.eclipse.jetty.server.NCSARequestLog">
+                            <!-- This doesn't do anything for Jetty, but 
+                                is a workaround for a Maven bug that prevents the requestLog from being set. -->
+                            <append>true</append>
+                        </requestLog>
+                        <systemProperties>
+                            <systemProperty>
+                                <name>Xmx</name>
+                                <value>600m</value>
+                            </systemProperty>
+                        </systemProperties>
+                        <webApp>
+                            <contextPath>/library-uni-due-model</contextPath>
+                            <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
+                            <jettyEnvXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
+                        </webApp>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>caucho</id>
+            <name>Caucho Repository</name>
+            <url>http://caucho.com/m2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 </project>
