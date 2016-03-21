@@ -4,6 +4,8 @@
 	 xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap.xsd"
 	 project-version="6">
 	<property name="defaultPackage" value="unidue.lib.model"/>
+	<property name="clientSupported" value="true"/>
+	<property name="defaultClientPackage" value="unidue.rcc.migration.department.ropclient"/>
 	<db-entity name="DEPARTMENT">
 		<db-attribute name="categoryId" type="VARCHAR" length="128"/>
 		<db-attribute name="departmentId" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10"/>
@@ -17,6 +19,11 @@
 			<db-key-cache-size>1</db-key-cache-size>
 		</db-key-generator>
 	</db-entity>
-	<db-relationship name="parent" source="DEPARTMENT" target="DEPARTMENT" toMany="false">
-	</db-relationship>
+	<obj-entity name="Department" className="unidue.lib.model.Department" clientClassName="unidue.rcc.migration.department.ropclient.Department" dbEntityName="DEPARTMENT">
+		<obj-attribute name="categoryId" type="java.lang.String" db-attribute-path="categoryId"/>
+		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
+		<obj-attribute name="lang" type="java.lang.String" db-attribute-path="lang"/>
+		<obj-attribute name="parentId" type="java.lang.Integer" db-attribute-path="parentId"/>
+		<obj-attribute name="text" type="java.lang.String" db-attribute-path="text"/>
+	</obj-entity>
 </data-map>
