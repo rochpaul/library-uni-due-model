@@ -19,6 +19,8 @@
         <h2-database-version>1.2.138</h2-database-version>
         <resin-hessian-version>3.1.6</resin-hessian-version>
         <slf4j-api-version>1.7.7</slf4j-api-version>
+        <testng-release-version>6.8.7</testng-release-version>
+        
     </properties>
 
     <dependencies>
@@ -44,7 +46,17 @@
             <version>${h2-database-version}</version>
             <scope>test</scope>
         </dependency>
-
+        
+         <!-- A dependency on either JUnit or TestNG is required, or the surefire 
+            plugin (which runs the tests) will fail, preventing Maven from packaging 
+            the WAR. Tapestry includes a large number of testing facilities designed 
+            for use with TestNG (http://testng.org/), so it's recommended. -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng-release-version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Database drivers -->
         <dependency>
