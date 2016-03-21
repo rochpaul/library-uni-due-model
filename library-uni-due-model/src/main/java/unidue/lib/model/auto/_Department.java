@@ -1,5 +1,7 @@
 package unidue.lib.model.auto;
 
+import java.util.List;
+
 import org.apache.cayenne.CayenneDataObject;
 
 import unidue.lib.model.Department;
@@ -18,6 +20,7 @@ public abstract class _Department extends CayenneDataObject {
     public static final String PARENT_ID_PROPERTY = "parentId";
     public static final String TEXT_PROPERTY = "text";
     public static final String PARENT_PROPERTY = "parent";
+    public static final String SUBNODES_PROPERTY = "subnodes";
 
     public static final String DEPARTMENT_ID_PK_COLUMN = "departmentId";
 
@@ -62,6 +65,18 @@ public abstract class _Department extends CayenneDataObject {
 
     public Department getParent() {
         return (Department)readProperty(PARENT_PROPERTY);
+    }
+
+
+    public void addToSubnodes(Department obj) {
+        addToManyTarget(SUBNODES_PROPERTY, obj, true);
+    }
+    public void removeFromSubnodes(Department obj) {
+        removeToManyTarget(SUBNODES_PROPERTY, obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<Department> getSubnodes() {
+        return (List<Department>)readProperty(SUBNODES_PROPERTY);
     }
 
 
