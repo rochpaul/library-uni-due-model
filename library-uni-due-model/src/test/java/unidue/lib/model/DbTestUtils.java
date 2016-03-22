@@ -19,21 +19,28 @@ import org.osjava.sj.memory.MemoryContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * An instance of <code>DbTestUtils</code> can be used to create the data
+ * sources used by cayenne. Be sure to call {@link DbTestUtils#setupdb()} to
+ * initialize all databases and bind them to the root jndi context. After all
+ * databases where setup, they must be closed by {@link DbTestUtils#shutdown()}.
+ * Take a look at the cayennes configuration to get the jndi names of all used
+ * databases.
+ *
+ * @author Nils Verheyen - Last modified by Paul Rochowski on 22.03.2016
+ */
 public class DbTestUtils {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DbTestUtils.class);
     /**
      * see http://stackoverflow.com/questions/4099095/what-does-javacomp-env-do
      * or http://www.prozesse-und-systeme.de/jndiResourcen.html
      **/
     private static final String ROOT_JNDI_CONTEXT_NAME = "java:comp/env";
 
-    private static final Logger LOG = LoggerFactory.getLogger(DbTestUtils.class);
-
-    private Context jndiContext;
-
-    private Set<String> jndiBindings;
-
     private ServerRuntime runtime;
+    private Context jndiContext;
+    private Set<String> jndiBindings;
 
     /**
      * Creates a new h2 in-memory database with target db name. username and
@@ -53,6 +60,67 @@ public class DbTestUtils {
         dataSource.setUser("sa");
         dataSource.setPassword("sa");
         return dataSource;
+    }
+
+    /**
+     * Initializes all databases used inside unit tests.
+     *
+     * @throws DatabaseException
+     *             thrown if the db could not been setup
+     */
+    public void setupdb() throws DatabaseException {
+
+        this.jndiBindings = new HashSet<>();
+
+        createJndiContext();
+
+        // createDatabase("miless", "jdbc/miless");
+        createDatabase("reserve_collections", "jdbc/reserve_collections");
+        // createDatabase("rc_access_log", "jdbc/rc_access_log");
+        initCayenne();
+
+        // initDAOs();
+        // try {
+        // writeDefaultConfiguration();
+        //
+        // } catch (ConfigurationException e) {
+        // e.printStackTrace();
+        // }
+    }
+
+    /**
+     * Loads cayennes configuration, creates database schema and binds a new
+     * {@link ObjectContext} to the current thread.
+     *
+     * @throws DatabaseException
+     *             thrown if a schema of one {@link DataNode} could not be
+     *             initialized.
+     */
+    private void initCayenne() throws DatabaseException {
+        // initialize cayenne configuration
+        runtime = new ServerRuntime("cayenne-reserve-collections.xml");
+
+        Collection<DataNode> nodes = runtime.getDataDomain().getDataNodes();
+        for (DataNode node : nodes) {
+            // in memory db was just created, therefore the schema has to be
+            // created.
+            SchemaUpdateStrategy updateStrategy = new CreateSchemaStrategy();
+            try {
+                updateStrategy.updateSchema(node);
+                LOG.debug("node " + node.getName() + " updated");
+            } catch (SQLException e) {
+                throw new DatabaseException("could not update schema of node" + node.getName(), e);
+            }
+        }
+
+        /*
+         * bind ObjectContext to current thread, so test are able to use
+         * BaseContext.getThreadObjectContext() to retrieve context.
+         */
+        ObjectContext dc = runtime.getContext();
+        BaseContext.bindThreadObjectContext(dc);
+
+        LOG.info("object context bound to current thread");
     }
 
     /**
@@ -130,67 +198,6 @@ public class DbTestUtils {
     }
 
     /**
-     * Loads cayennes configuration, creates database schema and binds a new
-     * {@link ObjectContext} to the current thread.
-     *
-     * @throws DatabaseException
-     *             thrown if a schema of one {@link DataNode} could not be
-     *             initialized.
-     */
-    private void initCayenne() throws DatabaseException {
-        // initialize cayenne configuration
-        runtime = new ServerRuntime("cayenne-reserve-collections.xml");
-
-        Collection<DataNode> nodes = runtime.getDataDomain().getDataNodes();
-        for (DataNode node : nodes) {
-            // in memory db was just created, therefore the schema has to be
-            // created.
-            SchemaUpdateStrategy updateStrategy = new CreateSchemaStrategy();
-            try {
-                updateStrategy.updateSchema(node);
-                LOG.debug("node " + node.getName() + " updated");
-            } catch (SQLException e) {
-                throw new DatabaseException("could not update schema of node" + node.getName(), e);
-            }
-        }
-
-        /*
-         * bind ObjectContext to current thread, so test are able to use
-         * BaseContext.getThreadObjectContext() to retrieve context.
-         */
-        ObjectContext dc = runtime.getContext();
-        BaseContext.bindThreadObjectContext(dc);
-
-        LOG.info("object context bound to current thread");
-    }
-
-    /**
-     * Initializes all databases used inside unit tests.
-     *
-     * @throws DatabaseException
-     *             thrown if the db could not been setup
-     */
-    public void setupdb() throws DatabaseException {
-
-        this.jndiBindings = new HashSet<>();
-
-        createJndiContext();
-
-        // createDatabase("miless", "jdbc/miless");
-        createDatabase("reserve_collections", "jdbc/reserve_collections");
-        // createDatabase("rc_access_log", "jdbc/rc_access_log");
-        initCayenne();
-
-        // initDAOs();
-        // try {
-        // writeDefaultConfiguration();
-        //
-        // } catch (ConfigurationException e) {
-        // e.printStackTrace();
-        // }
-    }
-
-    /**
      * Closes all resources initialized by {@link DbTestUtils#setupdb()}.
      */
     public void shutdown() {
@@ -209,5 +216,4 @@ public class DbTestUtils {
             LOG.error("could not destroy jndi context " + ROOT_JNDI_CONTEXT_NAME);
         }
     }
-
 }
