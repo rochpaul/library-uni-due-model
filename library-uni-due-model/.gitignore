@@ -63,3 +63,9 @@ local.properties
 .recommenders/
 
 /.project
+
+
+#TestNG Output
+test-output/
+
+

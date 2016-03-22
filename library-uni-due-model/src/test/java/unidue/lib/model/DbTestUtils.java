@@ -21,8 +21,12 @@ import org.slf4j.LoggerFactory;
 
 public class DbTestUtils {
 
+    /**
+     * see http://stackoverflow.com/questions/4099095/what-does-javacomp-env-do
+     * or http://www.prozesse-und-systeme.de/jndiResourcen.html
+     **/
     private static final String ROOT_JNDI_CONTEXT_NAME = "java:comp/env";
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(DbTestUtils.class);
 
     private Context jndiContext;
@@ -58,27 +62,7 @@ public class DbTestUtils {
      *             thrown if the jndi context could not be found or created.
      */
     private void createJndiContext() throws DatabaseException {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // QUESTIONS PART
-        
-        
-        
-        
-        
-        
+
         /*
          * set factory to use when creating new jndi naming context to in memory
          * context factory
@@ -99,28 +83,14 @@ public class DbTestUtils {
         } catch (NamingException e) {
             throw new DatabaseException("could not create jndi context", e);
         }
-        try {
 
-            /*
-             * see
-             * http://stackoverflow.com/questions/4099095/what-does-javacomp-env
-             * -do or http://www.prozesse-und-systeme.de/jndiResourcen.html
-             */
-            jndiContext.lookup(ROOT_JNDI_CONTEXT_NAME);
-
-            LOG.info("jndi context " + ROOT_JNDI_CONTEXT_NAME + " found");
-        } catch (NamingException e) {
-          
-        }
-        
         try {
             jndiContext.createSubcontext(ROOT_JNDI_CONTEXT_NAME);
             LOG.info("jndi context " + ROOT_JNDI_CONTEXT_NAME + " created");
+
         } catch (NamingException e) {
             throw new DatabaseException("could not create context " + ROOT_JNDI_CONTEXT_NAME, e);
         }
-        
-        // QUESTIONS PART
     }
 
     /**
@@ -170,7 +140,7 @@ public class DbTestUtils {
     private void initCayenne() throws DatabaseException {
         // initialize cayenne configuration
         runtime = new ServerRuntime("cayenne-reserve-collections.xml");
-        
+
         Collection<DataNode> nodes = runtime.getDataDomain().getDataNodes();
         for (DataNode node : nodes) {
             // in memory db was just created, therefore the schema has to be
@@ -206,9 +176,9 @@ public class DbTestUtils {
 
         createJndiContext();
 
-//        createDatabase("miless", "jdbc/miless");
+        // createDatabase("miless", "jdbc/miless");
         createDatabase("reserve_collections", "jdbc/reserve_collections");
-//        createDatabase("rc_access_log", "jdbc/rc_access_log");
+        // createDatabase("rc_access_log", "jdbc/rc_access_log");
         initCayenne();
 
         // initDAOs();
@@ -219,7 +189,7 @@ public class DbTestUtils {
         // e.printStackTrace();
         // }
     }
-    
+
     /**
      * Closes all resources initialized by {@link DbTestUtils#setupdb()}.
      */
