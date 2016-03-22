@@ -19,6 +19,20 @@
 			<db-key-cache-size>1</db-key-cache-size>
 		</db-key-generator>
 	</db-entity>
+    
+    <db-entity name="LIBRARY_LOCATION">
+        <db-attribute name="deleted" type="BOOLEAN"/>
+        <db-attribute name="id" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+        <db-attribute name="name" type="VARCHAR" length="512"/>
+        <db-attribute name="parentId" type="INTEGER"/>
+        <db-attribute name="physical" type="BOOLEAN"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>pk_library_location</db-generator-name>
+            <db-key-cache-size>1</db-key-cache-size>
+        </db-key-generator>
+    </db-entity>
+    
 	<obj-entity name="Department" className="unidue.lib.model.dto.Department" clientClassName="unidue.rcc.migration.department.ropclient.Department" dbEntityName="DEPARTMENT">
 		<obj-attribute name="categoryId" type="java.lang.String" db-attribute-path="categoryId"/>
 		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
@@ -26,4 +40,25 @@
 		<obj-attribute name="parentId" type="java.lang.Integer" db-attribute-path="parentId"/>
 		<obj-attribute name="text" type="java.lang.String" db-attribute-path="text"/>
 	</obj-entity>
+    
+    <obj-entity name="LibraryLocation" className="unidue.rc.model.LibraryLocation" dbEntityName="LIBRARY_LOCATION">
+        <obj-attribute name="deleted" type="boolean" db-attribute-path="deleted"/>
+        <obj-attribute name="id" type="java.lang.Integer" db-attribute-path="id"/>
+        <obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+        <obj-attribute name="physical" type="boolean" db-attribute-path="physical"/>
+    </obj-entity>
+
+    <db-relationship name="childLocationsFk" source="LIBRARY_LOCATION" target="LIBRARY_LOCATION" toMany="true">
+        <db-attribute-pair source="id" target="parentId"/>
+    </db-relationship>
+    <db-relationship name="parentLocationFk" source="LIBRARY_LOCATION" target="LIBRARY_LOCATION" toMany="false">
+        <db-attribute-pair source="parentId" target="id"/>
+    </db-relationship>
+    <db-relationship name="reserveCollectionFk" source="LIBRARY_LOCATION" target="RESERVE_COLLECTION" toMany="true">
+        <db-attribute-pair source="id" target="libraryLocationId"/>
+    </db-relationship>
+    <db-relationship name="scanJobArray" source="LIBRARY_LOCATION" target="SCAN_JOB" toMany="true">
+        <db-attribute-pair source="id" target="locationId"/>
+    </db-relationship>
+    
 </data-map>

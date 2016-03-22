@@ -26,6 +26,9 @@
         <!-- logging -->
         <slf4j-api-version>1.7.7</slf4j-api-version>
         <slf4j-log4j12-version>1.6.1</slf4j-log4j12-version>
+        
+        <!-- json -->
+        <jackson-version>2.2.2</jackson-version>
 
     </properties>
 
@@ -97,6 +100,14 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j-log4j12-version}</version>
+        </dependency>
+        
+        
+        <!-- json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-version}</version>
         </dependency>
 
 
