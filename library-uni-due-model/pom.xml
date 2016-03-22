@@ -13,6 +13,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- jdk -->
+        <jdk.version>1.8</jdk.version>
+
         <cayenne-server-version>3.1</cayenne-server-version>
         <simple-jndi-version>0.11.4.1</simple-jndi-version>
         <postgresql-version>9.3-1103-jdbc41</postgresql-version>
@@ -105,6 +108,18 @@
         <finalName>reserve-collections</finalName>
         <pluginManagement>
             <plugins>
+
+                <!-- Set a JDK compiler level -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>

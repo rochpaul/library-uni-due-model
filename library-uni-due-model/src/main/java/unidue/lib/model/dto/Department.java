@@ -1,4 +1,4 @@
-package unidue.lib.model;
+package unidue.lib.model.dto;
 
 import unidue.lib.model.auto._Department;
 

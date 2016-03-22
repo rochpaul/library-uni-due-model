@@ -3,7 +3,7 @@
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap.xsd"
 	 project-version="6">
-	<property name="defaultPackage" value="unidue.lib.model"/>
+	<property name="defaultPackage" value="unidue.lib.model.dto"/>
 	<property name="clientSupported" value="true"/>
 	<property name="defaultClientPackage" value="unidue.rcc.migration.department.ropclient"/>
 	<db-entity name="DEPARTMENT">
@@ -19,7 +19,7 @@
 			<db-key-cache-size>1</db-key-cache-size>
 		</db-key-generator>
 	</db-entity>
-	<obj-entity name="Department" className="unidue.lib.model.Department" clientClassName="unidue.rcc.migration.department.ropclient.Department" dbEntityName="DEPARTMENT">
+	<obj-entity name="Department" className="unidue.lib.model.dto.Department" clientClassName="unidue.rcc.migration.department.ropclient.Department" dbEntityName="DEPARTMENT">
 		<obj-attribute name="categoryId" type="java.lang.String" db-attribute-path="categoryId"/>
 		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
 		<obj-attribute name="lang" type="java.lang.String" db-attribute-path="lang"/>

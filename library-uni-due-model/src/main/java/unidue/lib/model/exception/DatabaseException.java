@@ -1,4 +1,4 @@
-package unidue.lib.model;
+package unidue.lib.model.exception;
 
 public class DatabaseException extends Exception {
 

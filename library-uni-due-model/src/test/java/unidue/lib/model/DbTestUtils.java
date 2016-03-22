@@ -19,6 +19,8 @@ import org.osjava.sj.memory.MemoryContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import unidue.lib.model.exception.DatabaseException;
+
 /**
  * An instance of <code>DbTestUtils</code> can be used to create the data
  * sources used by cayenne. Be sure to call {@link DbTestUtils#setupdb()} to

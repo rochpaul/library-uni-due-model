@@ -8,8 +8,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import unidue.lib.model.DatabaseException;
 import unidue.lib.model.DbTestUtils;
+import unidue.lib.model.exception.DatabaseException;
 
 public class TestDepartmentDAOImpl {
 
