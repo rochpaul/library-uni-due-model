@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <domain project-version="6">
-	<map name="reserve_collections_datamap"/>
+    <map name="miless_datamap" />
+    <map name="reserve_collections_datamap" />
 
-	<node name="reserve_collections_datanode"
-		 factory="org.apache.cayenne.configuration.server.JNDIDataSourceFactory"
-		 parameters="jdbc/reserve_collections"
-		 schema-update-strategy="org.apache.cayenne.access.dbsync.SkipSchemaUpdateStrategy"
-		>
-		<map-ref name="reserve_collections_datamap"/>
-	</node>
+
+    <node name="miless_datanode" factory="org.apache.cayenne.configuration.server.JNDIDataSourceFactory"
+        parameters="jdbc/miless" schema-update-strategy="org.apache.cayenne.access.dbsync.SkipSchemaUpdateStrategy">
+        <map-ref name="miless_datamap" />
+    </node>
+    <node name="reserve_collections_datanode" factory="org.apache.cayenne.configuration.server.JNDIDataSourceFactory"
+        parameters="jdbc/reserve_collections" schema-update-strategy="org.apache.cayenne.access.dbsync.SkipSchemaUpdateStrategy">
+        <map-ref name="reserve_collections_datamap" />
+    </node>
 </domain>

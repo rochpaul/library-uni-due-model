@@ -24,6 +24,20 @@
 <!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
 <!-- see http://wiki.eclipse.org/Jetty/Howto/Configure_JNDI_Datasource for examples -->
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="miless" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg/>
+        <Arg>jdbc/miless</Arg>
+        <Arg>
+            <New class="org.postgresql.ds.PGSimpleDataSource">
+                <Set name="User">miless</Set>
+                <Set name="Password">miless</Set>
+                <Set name="DatabaseName">miless</Set>
+                <Set name="ServerName">localhost</Set>
+
+                <Set name="PortNumber">5432</Set>
+            </New>
+        </Arg>
+    </New>
     <New id="reserve_collections" class="org.eclipse.jetty.plus.jndi.Resource">
         <Arg/>
         <Arg>jdbc/reserve_collections</Arg>

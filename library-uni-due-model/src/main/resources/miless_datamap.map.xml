@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/3.0/modelMap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap.xsd"
+    project-version="6">
+    <property name="defaultPackage" value="unidue.lib.model.miless.dto" />
+
+    <db-entity name="MCRCATEGORY">
+        <db-attribute name="CATEGID" type="VARCHAR" length="128" />
+        <db-attribute name="CLASSID" type="VARCHAR" isMandatory="true" length="32" />
+        <db-attribute name="INTERNALID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10" />
+        <db-attribute name="LEFTVALUE" type="INTEGER" length="10" />
+        <db-attribute name="LEVEL" type="INTEGER" length="10" />
+        <db-attribute name="PARENTID" type="INTEGER" length="10" />
+        <db-attribute name="POSITIONINPARENT" type="INTEGER" length="10" />
+        <db-attribute name="RIGHTVALUE" type="INTEGER" length="10" />
+        <db-attribute name="URI" type="VARCHAR" length="254" />
+    </db-entity>
+    <db-entity name="MCRCATEGORYLABELS">
+        <db-attribute name="CATEGORY" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="10" />
+        <db-attribute name="DESCRIPTION" type="VARCHAR" length="255" />
+        <db-attribute name="LANG" type="VARCHAR" isPrimaryKey="true" isMandatory="true" length="255" />
+        <db-attribute name="TEXT" type="VARCHAR" length="255" />
+    </db-entity>
+
+    <obj-entity name="MCRCategory" className="unidue.lib.model.miless.dto.MCRCategory" dbEntityName="MCRCATEGORY">
+        <obj-attribute name="categid" type="java.lang.String" db-attribute-path="CATEGID" />
+        <obj-attribute name="classid" type="java.lang.String" db-attribute-path="CLASSID" />
+        <obj-attribute name="internalId" type="java.lang.Integer" db-attribute-path="INTERNALID" />
+        <obj-attribute name="leftvalue" type="java.lang.Integer" db-attribute-path="LEFTVALUE" />
+        <obj-attribute name="level" type="java.lang.Integer" db-attribute-path="LEVEL" />
+        <obj-attribute name="positioninparent" type="java.lang.Integer" db-attribute-path="POSITIONINPARENT" />
+        <obj-attribute name="rightvalue" type="java.lang.Integer" db-attribute-path="RIGHTVALUE" />
+        <obj-attribute name="uri" type="java.lang.String" db-attribute-path="URI" />
+    </obj-entity>
+    <obj-entity name="MCRCategoryLabel" className="unidue.lib.model.miless.dto.MCRCategoryLabel" dbEntityName="MCRCATEGORYLABELS">
+        <obj-attribute name="description" type="java.lang.String" db-attribute-path="DESCRIPTION" />
+        <obj-attribute name="lang" type="java.lang.String" db-attribute-path="LANG" />
+        <obj-attribute name="text" type="java.lang.String" db-attribute-path="TEXT" />
+    </obj-entity>
+
+    <db-relationship name="labels" source="MCRCATEGORY" target="MCRCATEGORYLABELS" toDependentPK="true"
+        toMany="true">
+        <db-attribute-pair source="INTERNALID" target="CATEGORY" />
+    </db-relationship>
+    <db-relationship name="mcrcategoryArray" source="MCRCATEGORY" target="MCRCATEGORY" toMany="true">
+        <db-attribute-pair source="INTERNALID" target="PARENTID" />
+    </db-relationship>
+    <db-relationship name="toMcrcategory" source="MCRCATEGORY" target="MCRCATEGORY" toMany="false">
+        <db-attribute-pair source="PARENTID" target="INTERNALID" />
+    </db-relationship>
+    <db-relationship name="category" source="MCRCATEGORYLABELS" target="MCRCATEGORY" toMany="false">
+        <db-attribute-pair source="CATEGORY" target="INTERNALID" />
+    </db-relationship>
+    <obj-relationship name="childCategories" source="MCRCategory" target="MCRCategory" deleteRule="Deny"
+        db-relationship-path="mcrcategoryArray" />
+    <obj-relationship name="labels" source="MCRCategory" target="MCRCategoryLabel" deleteRule="Deny"
+        db-relationship-path="labels" />
+    <obj-relationship name="parentCategory" source="MCRCategory" target="MCRCategory" deleteRule="Nullify"
+        db-relationship-path="toMcrcategory" />
+    <obj-relationship name="category" source="MCRCategoryLabel" target="MCRCategory" deleteRule="Nullify"
+        db-relationship-path="category" />
+
+</data-map>
