@@ -1,5 +1,6 @@
 package unidue.lib.model.miless.dto;
 
+import unidue.lib.model.dto.Department;
 import unidue.lib.model.miless.auto._MCRCategory;
 
 /*
@@ -24,7 +25,11 @@ import unidue.lib.model.miless.auto._MCRCategory;
  * #L%
  */
 
-
+/**
+ * MCRCategory is replaced by Department DTO
+ *
+ * @deprecated use {@link Department} instead.  
+ */
 public class MCRCategory extends _MCRCategory {
 
     /**
