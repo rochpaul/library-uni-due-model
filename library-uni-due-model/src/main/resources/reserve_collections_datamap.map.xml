@@ -41,7 +41,7 @@
 		<obj-attribute name="text" type="java.lang.String" db-attribute-path="text"/>
 	</obj-entity>
     
-    <obj-entity name="LibraryLocation" className="unidue.rc.model.LibraryLocation" dbEntityName="LIBRARY_LOCATION">
+    <obj-entity name="LibraryLocation" className="unidue.lib.model.dto.LibraryLocation" dbEntityName="LIBRARY_LOCATION">
         <obj-attribute name="deleted" type="boolean" db-attribute-path="deleted"/>
         <obj-attribute name="id" type="java.lang.Integer" db-attribute-path="id"/>
         <obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
@@ -54,11 +54,15 @@
     <db-relationship name="parentLocationFk" source="LIBRARY_LOCATION" target="LIBRARY_LOCATION" toMany="false">
         <db-attribute-pair source="parentId" target="id"/>
     </db-relationship>
-    <db-relationship name="reserveCollectionFk" source="LIBRARY_LOCATION" target="RESERVE_COLLECTION" toMany="true">
-        <db-attribute-pair source="id" target="libraryLocationId"/>
-    </db-relationship>
-    <db-relationship name="scanJobArray" source="LIBRARY_LOCATION" target="SCAN_JOB" toMany="true">
-        <db-attribute-pair source="id" target="locationId"/>
-    </db-relationship>
+    
+<!--     <db-relationship name="reserveCollectionFk" source="LIBRARY_LOCATION" target="RESERVE_COLLECTION" toMany="true"> -->
+<!--         <db-attribute-pair source="id" target="libraryLocationId"/> -->
+<!--     </db-relationship> -->
+<!--     <db-relationship name="scanJobArray" source="LIBRARY_LOCATION" target="SCAN_JOB" toMany="true"> -->
+<!--         <db-attribute-pair source="id" target="locationId"/> -->
+<!--     </db-relationship> -->
+
+    <obj-relationship name="childLocations" source="LibraryLocation" target="LibraryLocation" deleteRule="Deny" db-relationship-path="childLocationsFk"/>
+    <obj-relationship name="parentLocation" source="LibraryLocation" target="LibraryLocation" deleteRule="Nullify" db-relationship-path="parentLocationFk"/>
     
 </data-map>
