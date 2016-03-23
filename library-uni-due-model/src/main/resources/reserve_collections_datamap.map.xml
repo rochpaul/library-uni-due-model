@@ -41,7 +41,7 @@
 		<obj-attribute name="text" type="java.lang.String" db-attribute-path="text"/>
 	</obj-entity>
     
-    <obj-entity name="LibraryLocation" className="unidue.lib.model.dto.LibraryLocation" dbEntityName="LIBRARY_LOCATION">
+    <obj-entity name="LibraryLocation" className="unidue.lib.model.dto.LibraryLocation" clientClassName="unidue.rcc.migration.department.ropclient.LibraryLocation" dbEntityName="LIBRARY_LOCATION">
         <obj-attribute name="deleted" type="boolean" db-attribute-path="deleted"/>
         <obj-attribute name="id" type="java.lang.Integer" db-attribute-path="id"/>
         <obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
