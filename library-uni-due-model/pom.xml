@@ -16,19 +16,27 @@
         <!-- jdk -->
         <jdk.version>1.8</jdk.version>
 
-        <cayenne-server-version>3.1</cayenne-server-version>
+        <!-- testing -->
         <simple-jndi-version>0.11.4.1</simple-jndi-version>
-        <postgresql-version>9.3-1103-jdbc41</postgresql-version>
         <h2-database-version>1.2.138</h2-database-version>
-        <resin-hessian-version>3.1.6</resin-hessian-version>
         <testng-release-version>6.8.7</testng-release-version>
+
+        <!-- Database drivers -->
+        <postgresql-version>9.3-1103-jdbc41</postgresql-version>
+
+        <!-- cayenne -->
+        <cayenne-server-version>3.1</cayenne-server-version>
+        <resin-hessian-version>3.1.6</resin-hessian-version>
 
         <!-- logging -->
         <slf4j-api-version>1.7.7</slf4j-api-version>
         <slf4j-log4j12-version>1.6.1</slf4j-log4j12-version>
-        
+
         <!-- json -->
         <jackson-version>2.2.2</jackson-version>
+
+        <!-- other -->
+        <commons-lang-version>3.4</commons-lang-version>
 
     </properties>
 
@@ -43,23 +51,15 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2-database-version}</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- A dependency on either JUnit or TestNG is required, or the surefire 
-            plugin (which runs the tests) will fail, preventing Maven from packaging 
-            the WAR. Tapestry includes a large number of testing facilities designed 
-            for use with TestNG (http://testng.org/), so it's recommended. -->
+        <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests) will fail, 
+            preventing Maven from packaging the WAR. Tapestry includes a large number of testing facilities designed for use with TestNG 
+            (http://testng.org/), so it's recommended. -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -101,13 +101,20 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j-log4j12-version}</version>
         </dependency>
-        
-        
+
+
         <!-- json -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-version}</version>
+        </dependency>
+
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang-version}</version>
         </dependency>
 
 
@@ -135,17 +142,15 @@
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
 
-                    <!-- Do NOT change version simply to jetty >= 7 as some 
-                        migration has to be done (http://wiki.eclipse.org/Jetty/Howto/Upgrade_from_Jetty_6_to_Jetty_7) -->
+                    <!-- Do NOT change version simply to jetty >= 7 as some migration has to be done (http://wiki.eclipse.org/Jetty/Howto/Upgrade_from_Jetty_6_to_Jetty_7) -->
                     <version>9.3.7.v20160115</version>
                     <configuration>
                         <stopKey>exit</stopKey>
                         <stopPort>32154</stopPort>
                         <!-- Log to the console. -->
-                        <requestLog
-                            implementation="org.eclipse.jetty.server.NCSARequestLog">
-                            <!-- This doesn't do anything for Jetty, but 
-                                is a workaround for a Maven bug that prevents the requestLog from being set. -->
+                        <requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
+                            <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug that prevents the 
+                                requestLog from being set. -->
                             <append>true</append>
                         </requestLog>
                         <systemProperties>

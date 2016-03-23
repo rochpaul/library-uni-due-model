@@ -76,7 +76,7 @@ public class DbTestUtils {
 
         createJndiContext();
 
-        // createDatabase("miless", "jdbc/miless");
+        createDatabase("miless", "jdbc/miless");
         createDatabase("reserve_collections", "jdbc/reserve_collections");
         // createDatabase("rc_access_log", "jdbc/rc_access_log");
         initCayenne();
