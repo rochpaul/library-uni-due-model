@@ -1,5 +1,10 @@
 package unidue.lib.model.exception;
 
+/**
+ * 
+ * @author Nils Verheyen
+ *
+ */
 public class DatabaseException extends Exception {
 
     /**

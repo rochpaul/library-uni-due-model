@@ -1,4 +1,4 @@
-package unidue.lib.model.dao;
+package unidue.lib.model.dao.impl;
 
 /*
  * #%L
@@ -32,6 +32,7 @@ import org.apache.cayenne.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import unidue.lib.model.dao.LibraryLocationDAO;
 import unidue.lib.model.dto.LibraryLocation;
 import unidue.lib.model.exception.CommitException;
 import unidue.lib.model.exception.DeleteException;

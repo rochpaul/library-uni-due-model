@@ -1,4 +1,4 @@
-package unidue.lib.model.dao;
+package unidue.lib.test.model.dao.impl;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.validation.ValidationException;
@@ -9,12 +9,19 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import unidue.lib.model.DbTestUtils;
+import unidue.lib.model.dao.LibraryLocationDAO;
+import unidue.lib.model.dao.impl.LibraryLocationDAOImpl;
 import unidue.lib.model.dto.LibraryLocation;
 import unidue.lib.model.exception.CommitException;
 import unidue.lib.model.exception.DatabaseException;
 import unidue.lib.model.exception.DeleteException;
+import unidue.lib.test.model.DbTestUtils;
 
+/**
+ * 
+ * @author Nils Verheyen 
+ *
+ */
 public class TestLibraryLocationDAO extends Assert {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestLibraryLocationDAO.class);

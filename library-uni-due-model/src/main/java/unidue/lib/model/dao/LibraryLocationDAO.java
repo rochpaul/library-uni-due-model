@@ -1,5 +1,7 @@
 package unidue.lib.model.dao;
 
+import unidue.lib.model.dao.impl.LibraryLocationDAOImpl;
+
 /*
  * #%L
  * Semesterapparate

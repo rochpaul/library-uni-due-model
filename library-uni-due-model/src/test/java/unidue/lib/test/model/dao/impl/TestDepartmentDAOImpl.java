@@ -1,4 +1,4 @@
-package unidue.lib.model.dao;
+package unidue.lib.test.model.dao.impl;
 
 import static org.testng.AssertJUnit.assertTrue;
 import org.apache.cayenne.validation.ValidationException;
@@ -8,9 +8,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import unidue.lib.model.DbTestUtils;
 import unidue.lib.model.exception.DatabaseException;
+import unidue.lib.test.model.DbTestUtils;
 
+/**
+ * 
+ * @author Paul Rochowski
+ * @since 23.03.2016
+ */
 public class TestDepartmentDAOImpl {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestDepartmentDAOImpl.class);

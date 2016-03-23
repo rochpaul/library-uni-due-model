@@ -1,4 +1,4 @@
-package unidue.lib.model;
+package unidue.lib.test.model;
 
 /*
  * #%L

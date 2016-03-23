@@ -1,4 +1,4 @@
-package unidue.lib.model;
+package unidue.lib.test.model;
 
 import java.sql.SQLException;
 import java.util.Collection;
