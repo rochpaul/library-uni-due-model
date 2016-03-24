@@ -51,4 +51,15 @@
             </New>
         </Arg>
     </New>
+    
+    <New class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg>jdbc/rc-test</Arg>
+    <Arg>
+        <New class="org.h2.jdbcx.JdbcDataSource">
+            <Set name="User">sa</Set>
+            <Set name="Password">sa</Set>
+            <Set name="URL">jdbc:h2:mem:rc-test;DB_CLOSE_DELAY=-1</Set>
+        </New>
+    </Arg>
+</New>
 </Configure>
