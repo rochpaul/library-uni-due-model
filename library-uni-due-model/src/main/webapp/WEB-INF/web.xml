@@ -9,8 +9,21 @@
         <servlet-class>org.apache.cayenne.configuration.rop.server.ROPHessianServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
+
+    <servlet>
+        <servlet-name>cayenneTestService</servlet-name>
+        <servlet-class>unidue.lib.model.testenv.CayenneTestServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>cayenne-reserve-collections</servlet-name>
         <url-pattern>/cayenne-service</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>cayenneTestService</servlet-name>
+        <url-pattern>/cayenne-testenv-service</url-pattern>
+    </servlet-mapping>
+
 </web-app>
