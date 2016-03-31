@@ -1,6 +1,8 @@
 package unidue.lib.model.testenv;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,10 +13,18 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.cayenne.BaseContext;
+import org.apache.cayenne.DataChannel;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.access.DataDomain;
 import org.apache.cayenne.access.DataNode;
 import org.apache.cayenne.access.dbsync.SchemaUpdateStrategy;
+import org.apache.cayenne.configuration.CayenneRuntime;
+import org.apache.cayenne.configuration.server.ServerModule;
 import org.apache.cayenne.configuration.server.ServerRuntime;
+import org.apache.cayenne.configuration.web.WebUtil;
+import org.apache.cayenne.di.DIBootstrap;
+import org.apache.cayenne.di.Injector;
+import org.apache.cayenne.di.Module;
 import org.h2.jdbcx.JdbcDataSource;
 import org.osjava.sj.memory.MemoryContextFactory;
 import org.slf4j.Logger;
@@ -161,27 +171,80 @@ public class CayenneTestServlet extends HessianServlet implements CayenneTestSer
      * @throws DatabaseException thrown if a schema of one {@link DataNode} could not be initialized.
      */
     private void initCayenne() throws DatabaseException {
-        // initialize cayenne configuration
-        runtime = new ServerRuntime("rc_test.xml");
+        
+//        CayenneRuntime runtime = WebUtil.getCayenneRuntime(servletContext);
+        
+        CayenneRuntime runtime = WebUtil.getCayenneRuntime(getServletContext());
+        
+//        FileConfiguration conf = new FileConfiguration("my-cayenne.xml");
+        
+        
+//        runtime.getContext(parentChannel)
+        
+//        Module[] modules = runtime.getModules();
+//        
+//        ArrayList<Module> listModules = new ArrayList<>();
+//        
+//        listModules.add(modules[0]);
+//        listModules.add(modules[1]);
+//        listModules.add(new ServerModule("rc_test"));
+//        
+//        Module[] modulesFromList = new Module[listModules.size()];
+//        modulesFromList = listModules.toArray(modulesFromList);
+        
+        
+//        Arrays.stream(modules)
+//        .filter(module -> module instanceof ServerModule);
+        
+//        ServerModule testModule = new ServerModule("rc_test");
+        
+//        CayenneRuntime.bindThreadInjector(DIBootstrap.createInjector(modulesFromList));
+//        
+//        
+//        DataChannel channel = runtime.getChannel();
+        
+        
 
-        Collection<DataNode> nodes = runtime.getDataDomain().getDataNodes();
-        for (DataNode node : nodes) {
-            // in memory db was just created, therefore the schema has to be created.
-            SchemaUpdateStrategy updateStrategy = new CreateSchemaStrategy();
-            try {
-                updateStrategy.updateSchema(node);
-                LOG.debug("node " + node.getName() + " updated");
-            } catch (SQLException e) {
-                throw new DatabaseException("could not update schema of node" + node.getName(), e);
-            }
-        }
+//        DataDomain domain = new DataDomain("rc_test");
+        
+//        Configuration configuration;
+        
+        ObjectContext objectContext = runtime.getContext();
+        
+        
+        
+//        Injector inj = ServerRuntime.getThreadInjector();
+//        
+//        ObjectContext objectContext = BaseContext.getThreadObjectContext();
+        
+        // initialize cayenne configuration
+//        runtime = new ServerRuntime("rc_test.xml");
+//
+//        Collection<DataNode> nodes = runtime.getDataDomain().getDataNodes();
+//                
+//        for (DataNode node : nodes) {
+//            // in memory db was just created, therefore the schema has to be created.
+//            SchemaUpdateStrategy updateStrategy = new CreateSchemaStrategy();
+//            try {
+//                updateStrategy.updateSchema(node);
+//                LOG.debug("node " + node.getName() + " updated");
+//            } catch (SQLException e) {
+//                throw new DatabaseException("could not update schema of node" + node.getName(), e);
+//            }
+//        }
+        
+        
+        
 
         /*
          * bind ObjectContext to current thread, so test are able to use BaseContext.getThreadObjectContext()
          * to retrieve context.
          */
+        
+//        Object object = runtime.getContext();
+//        
 //        ObjectContext dc = runtime.getContext();
-//        BaseContext.bindThreadObjectContext(dc);
+//        ObjectContext o = BaseContext.getThreadObjectContext();
 //
 //        LOG.info("object context bound to current thread");
     }
