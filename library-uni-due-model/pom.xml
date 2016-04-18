@@ -217,11 +217,14 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.5.v20141112</version>
                 <configuration>
+                    <httpConnector>
+                        <port>9080</port>
+                    </httpConnector>
                     <stopKey>jetty</stopKey>
                     <stopPort>19080</stopPort>
                     <daemon>true</daemon>
                     <webApp>
-                        <contextPath>/</contextPath>
+                        <contextPath>/library-uni-due-model-it</contextPath>
                     </webApp>
                     <jettyXml>src/main/webapp/WEB-INF/jetty-it.xml</jettyXml>
                     <connectors>

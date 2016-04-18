@@ -5,11 +5,11 @@
 <web-app>
     <display-name>library uni due model webservice</display-name>
 
-<!--     <servlet> -->
-<!--         <servlet-name>cayenne-reserve-collections</servlet-name> -->
-<!--         <servlet-class>org.apache.cayenne.configuration.rop.server.ROPHessianServlet</servlet-class> -->
-<!--         <load-on-startup>0</load-on-startup> -->
-<!--     </servlet> -->
+    <servlet>
+        <servlet-name>cayenne-reserve-collections</servlet-name>
+        <servlet-class>org.apache.cayenne.configuration.rop.server.ROPHessianServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
 <!--     <servlet-mapping> -->
 <!--         <servlet-name>cayenne-reserve-collections</servlet-name> -->
 <!--         <url-pattern>/cayenne-service</url-pattern> -->
