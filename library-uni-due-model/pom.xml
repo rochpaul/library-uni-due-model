@@ -159,10 +159,33 @@
             <!-- Integration Test Definition -->
 
             <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <includes>
+                        <include>**/IT*.java</include>
+                        <include>**/*IT.java</include>
+                        <include>**/*ITCase.java</include>
+                        <include>**/IntegrationTest*.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>com.btmatthews.maven.plugins.inmemdb</groupId>
                 <artifactId>inmemdb-maven-plugin</artifactId>
                 <version>1.4.3</version>
                 <configuration>
+                    <daemon>true</daemon>
                     <monitorPort>8082</monitorPort>
                     <monitorKey>inmemdb</monitorKey>
                     <type>h2</type>
@@ -196,7 +219,7 @@
                 <configuration>
                     <stopKey>jetty</stopKey>
                     <stopPort>19080</stopPort>
-                    <daemon>false</daemon>
+                    <daemon>true</daemon>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
@@ -239,28 +262,6 @@
                         <version>${h2-database-version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.12.4</version>
-                <configuration>
-                    <includes>
-                        <include>**/IT*.java</include>
-                        <include>**/*IT.java</include>
-                        <include>**/*ITCase.java</include>
-                        <include>**/IntegrationTest*.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
