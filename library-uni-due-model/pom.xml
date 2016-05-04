@@ -5,7 +5,7 @@
     <groupId>unidue</groupId>
     <artifactId>library-uni-due-model</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>library-uni-due-model</name>
     <url>http://maven.apache.org</url>
@@ -27,7 +27,6 @@
         <!-- cayenne -->
         <cayenne-server-version>3.1</cayenne-server-version>
         <resin-hessian-version>3.1.6</resin-hessian-version>
-        <servlet-api-release-version>3.1.0</servlet-api-release-version>
 
         <!-- logging -->
         <slf4j-api-version>1.7.7</slf4j-api-version>
@@ -42,13 +41,6 @@
             <groupId>simple-jndi</groupId>
             <artifactId>simple-jndi</artifactId>
             <version>${simple-jndi-version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.btmatthews.selenium.junit4</groupId>
-            <artifactId>selenium-junit4-runner</artifactId>
-            <version>1.0.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -90,13 +82,6 @@
             <version>3.1.6</version>
         </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet-api-release-version}</version>
-            <scope>provided</scope>
-        </dependency>
-
 
         <!--logging -->
         <dependency>
@@ -117,157 +102,63 @@
 
     <build>
         <finalName>reserve-collections</finalName>
+        <pluginManagement>
+            <plugins>
 
-        <plugins>
+                <!-- Set a JDK compiler level -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                    </configuration>
+                </plugin>
 
-            <!-- Set a JDK compiler level -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
-            </plugin>
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
 
-
-            <!-- Jetty for Local Environment -->
-
-
-
-
-            <!-- Integration Test Definition -->
-            <!-- <plugin> -->
-            <!-- <groupId>org.apache.maven.plugins</groupId> -->
-            <!-- <artifactId>maven-war-plugin</artifactId> -->
-            <!-- <version>2.6</version> -->
-            <!-- <configuration> -->
-            <!-- <webXml>${project.basedir}/src/main/webapp/WEB-INF/web.xml</webXml> -->
-            <!-- <warName>cas-test</warName> -->
-            <!-- </configuration> -->
-            <!-- <executions> -->
-            <!-- <execution> -->
-            <!-- <goals> -->
-            <!-- <goal>war</goal> -->
-            <!-- </goals> -->
-            <!-- <phase>pre-integration-test</phase> -->
-            <!-- </execution> -->
-            <!-- </executions> -->
-            <!-- </plugin> -->
-
-            <!-- Integration Test Definition -->
-
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.12.4</version>
-                <configuration>
-                    <includes>
-                        <include>**/IT*.java</include>
-                        <include>**/*IT.java</include>
-                        <include>**/*ITCase.java</include>
-                        <include>**/IntegrationTest*.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>com.btmatthews.maven.plugins.inmemdb</groupId>
-                <artifactId>inmemdb-maven-plugin</artifactId>
-                <version>1.4.3</version>
-                <configuration>
-                    <daemon>true</daemon>
-                    <monitorPort>8082</monitorPort>
-                    <monitorKey>inmemdb</monitorKey>
-                    <type>h2</type>
-                    <database>rc-test</database>
-                    <username>sa</username>
-                    <password>sa</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                    </execution>
-
-                    <execution>
-                        <id>stop</id>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.5.v20141112</version>
-                <configuration>
-                    <httpConnector>
-                        <port>9080</port>
-                    </httpConnector>
-                    <stopKey>jetty</stopKey>
-                    <stopPort>19080</stopPort>
-                    <daemon>true</daemon>
-                    <webApp>
-                        <contextPath>/library-uni-due-model-it</contextPath>
-                    </webApp>
-                    <jettyXml>src/main/webapp/WEB-INF/jetty-it.xml</jettyXml>
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>9080</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
-
-
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>start-jetty</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-
-                    <execution>
-                        <id>stop-jetty</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
+                    <!-- Do NOT change version simply to jetty >= 7 as some migration has to be done (http://wiki.eclipse.org/Jetty/Howto/Upgrade_from_Jetty_6_to_Jetty_7) -->
+                    <version>9.3.7.v20160115</version>
+                    <configuration>
+                        <stopKey>exit</stopKey>
+                        <stopPort>32154</stopPort>
+                        <!-- Log to the console. -->
+                        <requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
+                            <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug that prevents the 
+                                requestLog from being set. -->
+                            <append>true</append>
+                        </requestLog>
+                        <systemProperties>
+                            <systemProperty>
+                                <name>Xmx</name>
+                                <value>600m</value>
+                            </systemProperty>
+                        </systemProperties>
+                        <webApp>
+                            <contextPath>/library-uni-due-model</contextPath>
+                            <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
+                            <jettyEnvXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
+                        </webApp>
+                    </configuration>
+                    
+                    <dependencies>
                     <dependency>
-                        <groupId>commons-dbcp</groupId>
-                        <artifactId>commons-dbcp</artifactId>
-                        <version>1.4</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2-database-version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-        </plugins>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+          </dependency>
+          <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2-database-version}</version>
+          </dependency>
+          </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <repositories>

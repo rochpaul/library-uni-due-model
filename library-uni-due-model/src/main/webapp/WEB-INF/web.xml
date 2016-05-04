@@ -4,21 +4,13 @@
    "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
     <display-name>library uni due model webservice</display-name>
-
     <servlet>
         <servlet-name>cayenne-reserve-collections</servlet-name>
         <servlet-class>org.apache.cayenne.configuration.rop.server.ROPHessianServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
-<!--     <servlet-mapping> -->
-<!--         <servlet-name>cayenne-reserve-collections</servlet-name> -->
-<!--         <url-pattern>/cayenne-service</url-pattern> -->
-<!--     </servlet-mapping> -->
-
-    <!-- <resource-ref> -->
-    <!-- <res-ref-name>jdbc/test</res-ref-name> -->
-    <!-- <res-type>javax.sql.DataSource</res-type> -->
-    <!-- <res-auth>Container</res-auth> -->
-    <!-- </resource-ref> -->
-
+    <servlet-mapping>
+        <servlet-name>cayenne-reserve-collections</servlet-name>
+        <url-pattern>/cayenne-service</url-pattern>
+    </servlet-mapping>
 </web-app>
