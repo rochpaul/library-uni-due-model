@@ -24,8 +24,6 @@ package unidue.lib.model.dto;
 
 import unidue.lib.model.auto._LibraryLocation;
 
-import java.util.List;
-
 public class LibraryLocation extends _LibraryLocation {
 
     private static final long serialVersionUID = 1L;
